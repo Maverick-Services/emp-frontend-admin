@@ -71,7 +71,7 @@ export const editUserDetails = async(formData,token)=>{
 }
 
 export const fetchAllEmployees = async(token)=>{
-    let toastId = toast.loading("fetching");
+    // let toastId = toast.loading("fetching");
     try {
         const response = await apiConnector(
             "GET",
@@ -87,13 +87,13 @@ export const fetchAllEmployees = async(token)=>{
         }
 
         // console.log("FETCH_ALL_EMPLOYEES_API_RESPONSE:",response);
-        toast.dismiss(toastId);
+        // toast.dismiss(toastId);
         // toast.success(response?.data?.message);
         return response?.data?.data;
         
     } catch (err) {
         console.log("FETCH_ALL_EMPLOYEES_API_ERROR:",err);
-        toast.dismiss(toastId);
+        // toast.dismiss(toastId);
         toast.error(err?.response?.data?.message || err?.message)
         return null;
     }

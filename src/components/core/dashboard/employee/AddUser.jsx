@@ -7,12 +7,13 @@ import { ROLE } from "../../../../utils/constants";
 import { fetchAllTeams } from "../../../../services/operations/teamAPI";
 import { Spinner } from "../../../common/Spinner";
 import { createUser, editUserDetails } from "../../../../services/operations/userAPI";
+import LayoutProvider from "../../../common/LayoutProvider";
 
 export const AddUser = ({ user, editUser, setShowUserDetails, showUserDetails }) => {
 
   const navigate = useNavigate();
   const { token, setLoading, loading } = useContext(AuthContext);
-  const [teams,setTeams] = useState([]);
+  const [teams, setTeams] = useState([]);
   const [currentRole, setCurrentRole] = useState(ROLE.EMPLOYEE);
 
   const {
@@ -23,13 +24,13 @@ export const AddUser = ({ user, editUser, setShowUserDetails, showUserDetails })
     formState: { errors },
   } = useForm();
 
-  const fetchTeams = async()=>{
+  const fetchTeams = async () => {
     setLoading(true);
     const result = await fetchAllTeams(token);
-    if(result){
+    if (result) {
       setTeams(result);
     }
-    
+
     setLoading(false);
   }
 
@@ -38,7 +39,7 @@ export const AddUser = ({ user, editUser, setShowUserDetails, showUserDetails })
       setValue("name", user?.name);
       setValue("email", user?.email);
       setValue("phoneNo", user?.phoneNo);
-    }else{
+    } else {
       fetchTeams();
     }
   }, []);
@@ -52,7 +53,7 @@ export const AddUser = ({ user, editUser, setShowUserDetails, showUserDetails })
     );
   };
 
-  const userFormSubmitHandler = async(data) => {
+  const userFormSubmitHandler = async (data) => {
     if (editUser) {
       if (isFormUpdated()) {
         const currentValues = getValues();
@@ -91,128 +92,130 @@ export const AddUser = ({ user, editUser, setShowUserDetails, showUserDetails })
     }
   };
 
-  if(loading || !teams)
-    return <Spinner/>
+  if (loading || !teams)
+    return <Spinner />
 
   return (
-    <motion.div
-      /** Framer Motion On-Load Animation */
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md"
-    >
-      {/* Heading */}
-      <div className="w-full flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[#1C398E]">{editUser ? "Edit" : "Add"} User Profile</h1>
-        <button
-          onClick={() => setShowUserDetails(!showUserDetails)}
-          className="bg-[#1C398E] text-white px-4 py-2 rounded-md hover:bg-[#142A6E] transition"
-        >
-          Cancel
-        </button>
-      </div>
-
-      {/* Form */}
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={handleSubmit(userFormSubmitHandler)}
+    <LayoutProvider heading={editUser ? "Edit User" : "Add New User"}>
+      <motion.div
+        /** Framer Motion On-Load Animation */
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md"
       >
-        {/* Name Field */}
-        <div className="flex flex-col gap-1">
-          <label className="text-gray-600 font-medium">Name</label>
-          <input
-            type="text"
-            {...register("name", { required: true })}
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
-          />
+        {/* Heading */}
+        <div className="w-full flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-[#1C398E]"> User Profile</h1>
+          <button
+            onClick={() => setShowUserDetails(!showUserDetails)}
+            className="bg-[#1C398E] text-white px-4 py-2 rounded-md hover:bg-[#142A6E] transition"
+          >
+            Cancel
+          </button>
         </div>
 
-        {/* Email Field */}
-        {
-          !editUser &&
+        {/* Form */}
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmit(userFormSubmitHandler)}
+        >
+          {/* Name Field */}
           <div className="flex flex-col gap-1">
-            <label className="text-gray-600 font-medium">Email</label>
+            <label className="text-gray-600 font-medium">Name</label>
             <input
-              type="email"
-              {...register("email", { required: true })}
+              type="text"
+              {...register("name", { required: true })}
               className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
             />
           </div>
-        }
 
-        {/* Phone Number Field */}
-        <div className="flex flex-col gap-1">
-          <label className="text-gray-600 font-medium">Phone Number</label>
-          <input
-            type="tel"
-            {...register("phoneNo", { required: true })}
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
-          />
-        </div>
+          {/* Email Field */}
+          {
+            !editUser &&
+            <div className="flex flex-col gap-1">
+              <label className="text-gray-600 font-medium">Email</label>
+              <input
+                type="email"
+                {...register("email", { required: true })}
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
+              />
+            </div>
+          }
 
-        {/* Role */}
-        {
-          !editUser &&
+          {/* Phone Number Field */}
           <div className="flex flex-col gap-1">
-          <label className="font-medium text-gray-700">User Role</label>
-          <select
-            {...register("role",{
-            required:{
-                value:true,
-                message:"Role is required"
-            }
-            })}
-            defaultValue={currentRole}
-            onChange={(e) => setCurrentRole(e.target.value)}
-            name="role"
-            id="role"
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
-          >
-            {
-              Object.values(ROLE).map((rl,index)=>{
-                  return <option key={index} value={rl}>
-                          {rl}
-                      </option>
-              })
-            }
-          </select>
-        </div>
-        }
-
-        {/* Team */}
-        {
-          !editUser && currentRole !== ROLE.ADMIN &&
-          <div className="flex flex-col gap-1">
-            <label className="w-40 font-medium text-gray-700">Team</label>
-            <select
-              // onChange={stepInputChangeHandler}
-              {...register("team",{required:true})}
-              defaultValue={teams && teams[0]?._id}
-              name="team"
-              id="team"
+            <label className="text-gray-600 font-medium">Phone Number</label>
+            <input
+              type="tel"
+              {...register("phoneNo", { required: true })}
               className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
-            >
-              {
-                teams &&
-                teams.map(tm=>{
-                  return <option key={tm?._id} value={tm?._id}>
-                      {tm?.teamName}
-                  </option>
-                })
-              }
-            </select>
+            />
           </div>
-        }
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-[#1C398E] text-white py-2 px-6 rounded-md font-semibold hover:bg-[#142A6E] transition"
-        >
-          Submit
-        </button>
-      </form>
-    </motion.div>
+          {/* Role */}
+          {
+            !editUser &&
+            <div className="flex flex-col gap-1">
+              <label className="font-medium text-gray-700">User Role</label>
+              <select
+                {...register("role", {
+                  required: {
+                    value: true,
+                    message: "Role is required"
+                  }
+                })}
+                defaultValue={currentRole}
+                onChange={(e) => setCurrentRole(e.target.value)}
+                name="role"
+                id="role"
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
+              >
+                {
+                  Object.values(ROLE).map((rl, index) => {
+                    return <option key={index} value={rl}>
+                      {rl}
+                    </option>
+                  })
+                }
+              </select>
+            </div>
+          }
+
+          {/* Team */}
+          {
+            !editUser && currentRole !== ROLE.ADMIN &&
+            <div className="flex flex-col gap-1">
+              <label className="w-40 font-medium text-gray-700">Team</label>
+              <select
+                // onChange={stepInputChangeHandler}
+                {...register("team", { required: true })}
+                defaultValue={teams && teams[0]?._id}
+                name="team"
+                id="team"
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#1C398E]"
+              >
+                {
+                  teams &&
+                  teams.map(tm => {
+                    return <option key={tm?._id} value={tm?._id}>
+                      {tm?.teamName}
+                    </option>
+                  })
+                }
+              </select>
+            </div>
+          }
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-[#1C398E] text-white py-2 px-6 rounded-md font-semibold hover:bg-[#142A6E] transition"
+          >
+            Submit
+          </button>
+        </form>
+      </motion.div>
+    </LayoutProvider>
   );
 };

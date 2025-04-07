@@ -14,39 +14,49 @@ import Employees from './components/core/dashboard/Employees'
 import Teams from './components/core/dashboard/Teams'
 import OpenRoute from './components/core/auth/OpenRoute'
 import PrivateRoute from './components/core/auth/PrivateRoute'
+import Home from './components/core/dashboard/Home'
+import Queries from './components/core/dashboard/queries/Queries'
+import Query from './components/core/dashboard/queries/Query'
+import Announcements from './components/core/dashboard/announcements/Announcements'
+import NewAnnouncement from './components/core/dashboard/announcements/NewAnnouncement'
 
 function App() {
   return (
-    <div id='wrapper'  className='bg-gray-200'>
+    <div id='wrapper' className='bg-[#F3F6FE]'>
       {/* Admin  */}
       {/* <Navbar/> */}
       <Routes>
         <Route path='/' element={
           <OpenRoute>
-            <AdminLogin/>
+            <AdminLogin />
           </OpenRoute>
         } />
         <Route
           // path='/dashboard'
           element={
             <PrivateRoute>
-              <Dashboard/>
+              <Dashboard />
             </PrivateRoute>
           }
         >
-          <Route path='/dashboard/profile' element={<Profile/>}/>
+          <Route path='/dashboard/home' element={<Home />} />
+          <Route path='/dashboard/profile' element={<Profile />} />
           {/* <Route path='/dashboard/addAdmin' element={<AddAdmin/>}/> */}
           {/* <Route path='/dashboard/editAdminDetails/:userId' element={<EditAdminDetails/>}/> */}
-          <Route path='/dashboard/addUser' element={<AddUser/>}/>
-          <Route path='/dashboard/users/:empId' element={<EditUserDetails/>}/>
-          <Route path='/dashboard/users' element={<Employees/>}/>
-          <Route path='/dashboard/addTeam' element={<AddTeam/>}/>
-          <Route path='/dashboard/teams/:teamId' element={<EditTeamDetails/>}/>
-          <Route path='/dashboard/teams' element={<Teams/>}/>
+          <Route path='/dashboard/addUser' element={<AddUser />} />
+          <Route path='/dashboard/users/:empId' element={<EditUserDetails />} />
+          <Route path='/dashboard/users' element={<Employees />} />
+          <Route path='/dashboard/addTeam' element={<AddTeam />} />
+          <Route path='/dashboard/teams/:teamId' element={<EditTeamDetails />} />
+          <Route path='/dashboard/teams' element={<Teams />} />
+          <Route path='/dashboard/queries' element={<Queries />} />
+          <Route path='/dashboard/queries/:queryId' element={<Query />} />
+          <Route path='/dashboard/announcements' element={<Announcements />} />
+          <Route path='/dashboard/announcements/newAnnouncement' element={<NewAnnouncement />} />
           <Route
-          path='*'
-          element={<p>404 Error - Page Not Found</p>}
-        />
+            path='*'
+            element={<p>404 Error - Page Not Found</p>}
+          />
         </Route>
         <Route
           path='*'

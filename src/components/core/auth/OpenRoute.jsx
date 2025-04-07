@@ -9,15 +9,15 @@ function OpenRoute({ children }) {
   const { token } = useContext(AuthContext);
 
   // const { tokenExpiry } = useSelector((state) => state.auth)
-  
+
   // if(tokenExpiry < Date.now())
   //   dispatch(logout(navigate));
-  
+
   if (token === null) {
     return children
   } else {
     // console.log(token);
-    return <Navigate to={'/dashboard/profile'}/>
+    return <Navigate to={'/dashboard/home'} />
   }
 }
 

@@ -29,3 +29,21 @@ export const taskEndpoints = {
     FETCH_TASKS_API: BASE_URL + "/tasks/",
     CREATE_STEP_API: BASE_URL + "/steps/createStep",
 }
+
+export const queryEndPoints = {
+    CREATE_QUERY_API: BASE_URL + '/users/createQuery', // POST
+    ADD_REPLY_API: BASE_URL + '/users/addReply', // POST
+    UPDATE_QUERY_STATUS_API: BASE_URL + '/users/updateQueryStatus', // POST
+    FETCH_QUERIES_BY_EMPLOYEE_API: BASE_URL + '/users/fetchQueriesByEmployee', // POST
+    FETCH_QUERIES_BY_TEAM_API: BASE_URL + '/users/fetchQueriesByTeam',
+    FETCH_ALL_QUERIES_API: BASE_URL + '/users/fetchAllQueries', // GET
+    FETCH_COMPLETE_QUERY_DETAILS_API: BASE_URL + '/users/fetchCompleteQueryDetails', // POST
+}
+
+export const announcementEndpoints = {
+    CREATE_ANNOUNCEMENT_API: BASE_URL + '/users/createAnnouncement', // POST
+    DELETE_ANNOUNCEMENT_API: BASE_URL + '/users/deleteAnnouncement', // POST
+    FETCH_ANNOUNCEMENTS_BY_TEAM_API: BASE_URL + '/users/fetchAnnouncementsByTeam', // POST
+    FETCH_ALL_ANNOUNCEMENTS_API: BASE_URL + '/users/fetchAllAnnouncements', // GET
+    FETCH_COMPLETE_ANNOUNCEMENT_DETAILS_API: BASE_URL + '/users/fetchCompleteAnnouncementDetails', // POST
+}

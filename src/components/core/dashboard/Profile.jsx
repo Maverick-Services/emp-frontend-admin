@@ -1,39 +1,41 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { AuthContext } from "../../../Context/AuthContext";
+import LayoutProvider from "../../common/LayoutProvider";
 
 export const Profile = () => {
 
-  const {admin} = useContext(AuthContext);
+  const { admin } = useContext(AuthContext);
   // console.log(admin)
 
   return (
-    <div className="w-full h-full flex lg:items-center justify-center bg-[#E5E7EB] p-6">
-      <motion.div
-        className="w-fit sm:w-full flex flex-col gap-4 max-w-2xl bg-white shadow-lg rounded-2xl p-8 border border-gray-200"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Profile Header */}
-        <motion.h1
-          className="text-3xl font-bold sm:text-4xl sm:font-extrabold text-[#1C398E] pb-2 text-center"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4 }}
+    <LayoutProvider>
+      <div className="w-full h-full flex lg:items-center justify-center">
+        <motion.div
+          className="w-fit sm:w-full flex flex-col gap-4 max-w-2xl bg-white shadow-lg rounded-2xl p-8 border border-gray-200"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          My Profile
-        </motion.h1>
+          {/* Profile Header */}
+          <motion.h1
+            className="text-3xl font-bold sm:text-4xl sm:font-extrabold text-[#1C398E] pb-2 text-center"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            My Profile
+          </motion.h1>
 
-        {/* Profile Details */}
-        <div className="space-y-4  flex flex-col gap-2">
-          <ProfileItem label="Name" value={admin?.name} />
-          <ProfileItem label="Email" value={admin?.email} />
-          <ProfileItem label="Phone No" value={admin?.phoneNo} />
-        </div>
+          {/* Profile Details */}
+          <div className="space-y-4  flex flex-col gap-2">
+            <ProfileItem label="Name" value={admin?.name} />
+            <ProfileItem label="Email" value={admin?.email} />
+            <ProfileItem label="Phone No" value={admin?.phoneNo} />
+          </div>
 
-        {/* Action Buttons */}
-        {/* <motion.div
+          {/* Action Buttons */}
+          {/* <motion.div
           className="flex justify-center gap-4"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -47,8 +49,9 @@ export const Profile = () => {
             Logout
           </motion.button>
         </motion.div> */}
-      </motion.div>
-    </div>
+        </motion.div>
+      </div>
+    </LayoutProvider>
   );
 };
 
