@@ -5,7 +5,8 @@ import toast from "react-hot-toast";
 
 const {
     CREATE_ANNOUNCEMENT_API,
-    FETCH_ALL_ANNOUNCEMENTS_API
+    FETCH_ALL_ANNOUNCEMENTS_API,
+    FETCH_COMPLETE_ANNOUNCEMENT_DETAILS_API
 } = announcementEndpoints;
 
 export const createAnnouncement = async (data, token) => {
@@ -33,7 +34,6 @@ export const createAnnouncement = async (data, token) => {
     }
 }
 
-
 export const fetchAllAnnouncements = async () => {
     try {
         const response = await apiConnector(
@@ -51,6 +51,31 @@ export const fetchAllAnnouncements = async () => {
 
     } catch (error) {
         console.log("GET ALL ANNOUNCEMENT ERROR:- ", error)
+        toast.error(error?.response?.data?.message || error?.message)
+        return null;
+    }
+}
+
+export const fetchCompleteDetailsOfAnnouncement = async (data, token) => {
+    try {
+        const response = await apiConnector(
+            "POST",
+            FETCH_COMPLETE_ANNOUNCEMENT_DETAILS_API,
+            data,
+            {
+                "Authorization": `Bearer ${token}`
+            }
+        )
+
+        if (!response?.data?.success) {
+            throw new Error(response?.data?.message)
+        }
+
+        // console.log("FETCH COMPLETE ANNOUNCEMENT DETAILS RESPONSE:- ", response)
+        return response?.data?.data;
+
+    } catch (error) {
+        console.log("FETCH COMPLETE ANNOUNCEMENT DETAILS ERROR:- ", error)
         toast.error(error?.response?.data?.message || error?.message)
         return null;
     }

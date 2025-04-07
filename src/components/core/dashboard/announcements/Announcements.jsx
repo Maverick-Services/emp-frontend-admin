@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 import { fetchAllAnnouncements } from '../../../../services/operations/announcementAPI'
 import { Spinner } from '../../../common/Spinner'
 import AnnouncementsTable from './AnnouncementsTable'
+import { ROLE } from '../../../../utils/constants'
 
 function Announcements() {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
     console.log(data)
 
     async function fetchAnnouncements() {
@@ -35,10 +35,13 @@ function Announcements() {
                     </div>
                 </div>
             </LayoutHead>
-            {loading || !data
-                ? <Spinner />
-                : <AnnouncementsTable announcements={data} />
-            }
+            <div className='px-6 flex flex-col items-start justify-center gap-4 py-4'>
+                {
+                    loading || !data
+                        ? <Spinner />
+                        : <AnnouncementsTable announcements={data} />
+                }
+            </div>
         </LayoutOuter>
     )
 }

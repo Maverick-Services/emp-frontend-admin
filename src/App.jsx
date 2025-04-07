@@ -19,6 +19,7 @@ import Queries from './components/core/dashboard/queries/Queries'
 import Query from './components/core/dashboard/queries/Query'
 import Announcements from './components/core/dashboard/announcements/Announcements'
 import NewAnnouncement from './components/core/dashboard/announcements/NewAnnouncement'
+import AnnouncementDetails from './components/core/dashboard/announcements/AnnouncementDetails'
 
 function App() {
   return (
@@ -41,8 +42,6 @@ function App() {
         >
           <Route path='/dashboard/home' element={<Home />} />
           <Route path='/dashboard/profile' element={<Profile />} />
-          {/* <Route path='/dashboard/addAdmin' element={<AddAdmin/>}/> */}
-          {/* <Route path='/dashboard/editAdminDetails/:userId' element={<EditAdminDetails/>}/> */}
           <Route path='/dashboard/addUser' element={<AddUser />} />
           <Route path='/dashboard/users/:empId' element={<EditUserDetails />} />
           <Route path='/dashboard/users' element={<Employees />} />
@@ -53,6 +52,7 @@ function App() {
           <Route path='/dashboard/queries/:queryId' element={<Query />} />
           <Route path='/dashboard/announcements' element={<Announcements />} />
           <Route path='/dashboard/announcements/newAnnouncement' element={<NewAnnouncement />} />
+          <Route path='/dashboard/announcements/:announcementId' element={<AnnouncementDetails />} />
           <Route
             path='*'
             element={<p>404 Error - Page Not Found</p>}
